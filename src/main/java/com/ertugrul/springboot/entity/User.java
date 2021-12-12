@@ -15,6 +15,9 @@ public class User {
     @Column(name = "NAME", nullable = false, length = 50)
     private String name;
 
+    @Column(name = "USERNAME", nullable = false, length = 20)
+    private String userName;
+
     @Column(name = "SURNAME", nullable = false, length = 50)
     private String surname;
 
@@ -25,6 +28,7 @@ public class User {
 
     @Column(name = "PHONE", nullable = false, length = 15)
     private String phone;
+
 
     public Long getId() {
         return id;
@@ -66,11 +70,21 @@ public class User {
         this.phone = phone;
     }
 
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", userName='" + userName + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
