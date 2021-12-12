@@ -52,14 +52,10 @@ public class CategoryController {
 
 
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody CategoryDto categoryDto){ //TODO: Input değeri dto tipinde olmalı
+    public ResponseEntity<Object> save(@RequestBody CategoryDto categoryDto){
 
         Category category = CategoryConverter.INSTANCE.convertCategoryDtoToCategory(categoryDto);
 
-        //TODO: Check it
-        if (category.getTopCategory() != null && category.getTopCategory().getId() == null){
-            category.setTopCategory(null);
-        }
 
         category = categoryService.save(category);
 
@@ -73,14 +69,9 @@ public class CategoryController {
     }
 
     @PutMapping("")
-    public CategoryDto update(@RequestBody CategoryDto categoryDto){//TODO: Input değeri dto tipinde olmalı
+    public CategoryDto update(@RequestBody CategoryDto categoryDto){
 
         Category category = CategoryConverter.INSTANCE.convertCategoryDtoToCategory(categoryDto);
-
-        //TODO: Check it
-        if (category.getTopCategory() != null && category.getTopCategory().getId() == null){
-            category.setTopCategory(null);
-        }
 
         category = categoryService.save(category);
 
@@ -94,7 +85,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    // localhost:8080/api/products/{id}/products
+    // localhost:8080/api/category/{id}/products
     @GetMapping("/{id}/products")
     public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long id){
         List<Product> productList = productService.findAllByCategoryOrderByIdDesc(id);

@@ -2,9 +2,7 @@ package com.ertugrul.springboot.converter;
 
 import com.ertugrul.springboot.dto.CategoryDto;
 import com.ertugrul.springboot.entity.Category;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -26,4 +24,11 @@ public interface CategoryConverter {
 //    @Mapping(target = "ustCategory.id", expression = "java(categoryDto.getUstCategoryId() == null ? null : " +
 //            "categoryDto.getUstCategoryId())")
     Category convertCategoryDtoToCategory(CategoryDto categoryDto);
+
+    @AfterMapping
+    default void setNulls(@MappingTarget final Category category, CategoryDto categoryDto){
+        if (categoryDto.getTopCategoryId() == null){
+            category.setTopCategory(null);
+        }
+    }
 }
