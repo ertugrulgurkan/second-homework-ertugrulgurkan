@@ -28,7 +28,7 @@ public class CategoryController {
     private ProductService productService;
 
 
-    @GetMapping("")
+    @GetMapping(value = {"","/"})
     public List<CategoryDto> findAll(){
 
         List<Category> categoryList = categoryService.findAll();
@@ -81,7 +81,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(Long id){
+    public void delete(@PathVariable Long id){
         categoryService.deleteById(id);
     }
 

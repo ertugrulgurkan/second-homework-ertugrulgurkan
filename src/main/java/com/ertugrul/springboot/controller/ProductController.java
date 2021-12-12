@@ -21,7 +21,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products/")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("")
+    @GetMapping(value = {"","/"})
     public MappingJacksonValue findAllProductList() {
 
         List<Product> productList = productService.findAll();
@@ -107,7 +107,7 @@ public class ProductController {
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id){
         productService.deleteById(id);
     }
