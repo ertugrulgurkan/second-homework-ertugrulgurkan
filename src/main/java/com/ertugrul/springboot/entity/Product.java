@@ -1,11 +1,16 @@
 package com.ertugrul.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "PRODUCT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "category"})
+@JsonFilter("ProductFilter")
 public class Product {
 
     @SequenceGenerator(name = "generator", sequenceName = "PRODUCT_ID_SEQ")

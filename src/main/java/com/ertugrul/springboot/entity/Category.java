@@ -1,9 +1,12 @@
 package com.ertugrul.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CATEGORY")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "topCategory"})
 public class Category {
 
     @SequenceGenerator(name = "generator", sequenceName = "CATEGORY_ID_SEQ")
