@@ -5,21 +5,25 @@ import java.util.Date;
 
 public class ProductCommentDto {
 
+    private Long commentId;
+    private Long productId;
+    private Long userId;
     private String productName;
-    private String categoryName;
     private BigDecimal price;
-    private String userName;
+    private String userUsername;
     private String userSurname;
     private String userEmail;
     private String userPhone;
     private String comment;
     private Date commentDate;
 
-    public ProductCommentDto(String productName, String categoryName, BigDecimal price, String userName, String userSurname, String userEmail, String userPhone, String comment, Date commentDate) {
+    public ProductCommentDto(Long commentId, Long productId, Long userId, String productName, BigDecimal price, String userUsername, String userSurname, String userEmail, String userPhone, String comment, Date commentDate) {
+        this.commentId = commentId;
+        this.productId = productId;
+        this.userId = userId;
         this.productName = productName;
-        this.categoryName = categoryName;
         this.price = price;
-        this.userName = userName;
+        this.userUsername = userUsername;
         this.userSurname = userSurname;
         this.userEmail = userEmail;
         this.userPhone = userPhone;
@@ -38,14 +42,6 @@ public class ProductCommentDto {
         this.productName = productName;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -54,12 +50,12 @@ public class ProductCommentDto {
         this.price = price;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserUsername() {
+        return userUsername;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 
     public String getUserSurname() {
@@ -102,18 +98,27 @@ public class ProductCommentDto {
         this.commentDate = commentDate;
     }
 
-    @Override
-    public String toString() {
-        return "ProductCommentDto{" +
-                "productName='" + productName + '\'' +
-                ", categoryName='" + categoryName + '\'' +
-                ", price=" + price +
-                ", userName='" + userName + '\'' +
-                ", userSurname='" + userSurname + '\'' +
-                ", userEmail='" + userEmail + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", comment='" + comment + '\'' +
-                ", commentDate=" + commentDate +
-                '}';
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 }

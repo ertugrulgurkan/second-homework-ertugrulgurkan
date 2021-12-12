@@ -9,7 +9,6 @@ import java.util.List;
 public interface ProductDao extends JpaRepository<Product, Long> {
 
 
-
     @Query("select product from Product product where product.category.id = :categoryId")
     List<Product> findAllByCategoryOrderByIdDesc(Long categoryId);
 }

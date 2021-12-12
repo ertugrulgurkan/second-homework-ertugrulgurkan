@@ -15,7 +15,7 @@ import java.util.Date;
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest){
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
 
         Date errorDate = new Date();
         String message = ex.getMessage();
@@ -27,7 +27,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAllExceptions(ProductNotFoundException ex, WebRequest webRequest){
+    public final ResponseEntity<Object> handleAllExceptions(ProductNotFoundException ex, WebRequest webRequest) {
 
         Date errorDate = new Date();
         String message = ex.getMessage();
@@ -39,7 +39,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAllExceptions(CategoryNotFoundException ex, WebRequest webRequest){
+    public final ResponseEntity<Object> handleAllExceptions(CategoryNotFoundException ex, WebRequest webRequest) {
 
         Date errorDate = new Date();
         String message = ex.getMessage();
@@ -49,8 +49,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAllExceptions(UserNotFoundException ex, WebRequest webRequest){
+    public final ResponseEntity<Object> handleAllExceptions(UserNotFoundException ex, WebRequest webRequest) {
 
         Date errorDate = new Date();
         String message = ex.getMessage();
@@ -60,5 +61,19 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleAllExceptions(CommentNotFoundException ex, WebRequest webRequest) {
+
+        Date errorDate = new Date();
+        String message = ex.getMessage();
+        String description = webRequest.getDescription(false);
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
 
 }

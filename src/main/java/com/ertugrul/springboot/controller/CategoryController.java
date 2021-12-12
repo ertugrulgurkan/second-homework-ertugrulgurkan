@@ -28,8 +28,8 @@ public class CategoryController {
     private ProductService productService;
 
 
-    @GetMapping(value = {"","/"})
-    public List<CategoryDto> findAll(){
+    @GetMapping(value = {"", "/"})
+    public List<CategoryDto> findAll() {
 
         List<Category> categoryList = categoryService.findAll();
 
@@ -39,23 +39,24 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category findById(@PathVariable Long id){
+    public CategoryDto findById(@PathVariable Long id) {
 
         Category category = categoryService.findById(id);
 
-        if (category == null){
+        if (category == null) {
             throw new CategoryNotFoundException("Category not found. id: " + id);
         }
 
-        return category;
+        CategoryDto categoryDto = CategoryConverter.INSTANCE.convertCategoryToCategoryDto(category);
+
+        return categoryDto;
     }
 
 
-    @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody CategoryDto categoryDto){
+    @PostMapping(value = {"", "/"})
+    public ResponseEntity<Object> save(@RequestBody CategoryDto categoryDto) {
 
         Category category = CategoryConverter.INSTANCE.convertCategoryDtoToCategory(categoryDto);
-
 
         category = categoryService.save(category);
 
@@ -68,8 +69,8 @@ public class CategoryController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("")
-    public CategoryDto update(@RequestBody CategoryDto categoryDto){
+    @PutMapping(value = {"", "/"})
+    public CategoryDto update(@RequestBody CategoryDto categoryDto) {
 
         Category category = CategoryConverter.INSTANCE.convertCategoryDtoToCategory(categoryDto);
 
@@ -81,13 +82,13 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
 
     // localhost:8080/api/category/{id}/products
     @GetMapping("/{id}/products")
-    public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long id){
+    public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long id) {
         List<Product> productList = productService.findAllByCategoryOrderByIdDesc(id);
 
         List<ProductDetailDto> productDetayDtoList = ProductConverter.INSTANCE.convertAllProductListToProductDetailDtoList(productList);

@@ -21,13 +21,13 @@ public interface CategoryConverter {
 //    @Mapping(target = "ustCategory.id", source = "ustCategoryId", expression = "java(null))
 //    @Mapping(target = "ustCategory.id", source = "ustCategoryId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
 
-//    @Mapping(target = "ustCategory.id", expression = "java(categoryDto.getUstCategoryId() == null ? null : " +
+    //    @Mapping(target = "ustCategory.id", expression = "java(categoryDto.getUstCategoryId() == null ? null : " +
 //            "categoryDto.getUstCategoryId())")
     Category convertCategoryDtoToCategory(CategoryDto categoryDto);
 
     @AfterMapping
-    default void setNulls(@MappingTarget final Category category, CategoryDto categoryDto){
-        if (categoryDto.getTopCategoryId() == null){
+    default void setNulls(@MappingTarget final Category category, CategoryDto categoryDto) {
+        if (categoryDto.getTopCategoryId() == null) {
             category.setTopCategory(null);
         }
     }

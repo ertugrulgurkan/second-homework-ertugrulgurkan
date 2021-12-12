@@ -2,7 +2,8 @@ package com.ertugrul.springboot.converter;
 
 import com.ertugrul.springboot.dto.UserDto;
 import com.ertugrul.springboot.entity.User;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

@@ -1,11 +1,15 @@
 package com.ertugrul.springboot.controller;
 
+import com.ertugrul.springboot.converter.ProductCommentConverter;
 import com.ertugrul.springboot.converter.ProductConverter;
+import com.ertugrul.springboot.dto.ProductCommentDto;
 import com.ertugrul.springboot.dto.ProductDetailDto;
 import com.ertugrul.springboot.dto.ProductDto;
 import com.ertugrul.springboot.entity.Product;
+import com.ertugrul.springboot.entity.ProductComment;
+import com.ertugrul.springboot.exception.CommentNotFoundException;
 import com.ertugrul.springboot.exception.ProductNotFoundException;
-import com.ertugrul.springboot.service.CategoryService;
+import com.ertugrul.springboot.service.ProductCommentService;
 import com.ertugrul.springboot.service.ProductService;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -28,9 +32,9 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private CategoryService categoryService;
+    private ProductCommentService productCommentService;
 
-    @GetMapping(value = {"","/"})
+    @GetMapping(value = {"", "/"})
     public MappingJacksonValue findAllProductList() {
 
         List<Product> productList = productService.findAll();
@@ -47,11 +51,11 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public MappingJacksonValue findProductById(@PathVariable Long id){
+    public MappingJacksonValue findProductById(@PathVariable Long id) {
 
         Product product = productService.findById(id);
 
-        if (product == null){
+        if (product == null) {
             throw new ProductNotFoundException("Product not found. id: " + id);
         }
 
@@ -78,11 +82,11 @@ public class ProductController {
     }
 
     @GetMapping("/detail/{id}")
-    public ProductDetailDto findProductDtoById(@PathVariable Long id){
+    public ProductDetailDto findProductDtoById(@PathVariable Long id) {
 
         Product product = productService.findById(id);
 
-        if (product == null){
+        if (product == null) {
             throw new ProductNotFoundException("Product not found. id: " + id);
         }
 
@@ -92,7 +96,7 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> saveProduct(@RequestBody ProductDto productDto){
+    public ResponseEntity<Object> saveProduct(@RequestBody ProductDto productDto) {
 
         Product product = ProductConverter.INSTANCE.convertProductDtoToProduct(productDto);
 
@@ -108,18 +112,34 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public void deleteProduct(@PathVariable Long id) {
         productService.deleteById(id);
     }
 
     @GetMapping("categories/{categoryId}")
-    public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long categoryId){
+    public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long categoryId) {
 
         List<Product> productList = productService.findAllByCategoryOrderByIdDesc(categoryId);
 
         List<ProductDetailDto> productDetailDtoList = ProductConverter.INSTANCE.convertAllProductListToProductDetailDtoList(productList);
 
         return productDetailDtoList;
+    }
+
+    // Example Req:  http://localhost:8080/api/products/3/comments
+    @GetMapping(value = {"/{id}/comments/", "/{id}/comments"})
+    public List<ProductCommentDto> findProductCommentByUserId(@PathVariable Long id) {
+
+        Product product = productService.findById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product not found. id: " + id);
+        }
+        List<ProductComment> productCommentList = productCommentService.findProductCommentByUserId(id);
+        if (productCommentList == null || productCommentList.size() == 0) {
+            throw new CommentNotFoundException("There are no comments for this product yet.");
+        }
+        List<ProductCommentDto> productCommentDtoList = ProductCommentConverter.INSTANCE.convertAllProductCommentListToProductCommentDtoList(productCommentList);
+        return productCommentDtoList;
     }
 
     private SimpleFilterProvider getProductFilterProvider(String filterName) {

@@ -4,7 +4,7 @@ public class UserDto {
 
     private Long id;
     private String name;
-    private String userName;
+    private String username;
     private String surname;
     private String email;
     private String phone;
@@ -13,10 +13,10 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id, String name, String userName, String surname, String email, String phone) {
+    public UserDto(Long id, String name, String username, String surname, String email, String phone) {
         this.id = id;
         this.name = name;
-        this.userName = userName;
+        this.username = username;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
@@ -38,12 +38,12 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSurname() {
@@ -75,7 +75,7 @@ public class UserDto {
         return "UserDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +

@@ -16,7 +16,7 @@ public class User {
     private String name;
 
     @Column(name = "USERNAME", nullable = false, length = 20)
-    private String userName;
+    private String username;
 
     @Column(name = "SURNAME", nullable = false, length = 50)
     private String surname;
@@ -71,12 +71,12 @@ public class User {
     }
 
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +

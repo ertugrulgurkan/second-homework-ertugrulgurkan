@@ -5,7 +5,7 @@ VALUES (2, 'Ozan', 'ozanyilmaz124578@gmail.com', 'Yilmaz', '5370059002', 'ozan19
 INSERT INTO public.USERS(ID, NAME, EMAIL, SURNAME, PHONE, USERNAME)
 VALUES (3, 'Ozlem', 'ozlemcoskun18739@gmail.com', 'Coskun', '5375624803', 'Ozlem142');
 INSERT INTO public.USERS(ID, NAME, EMAIL, SURNAME, PHONE, USERNAME)
-VALUES (4, 'Mustafa', 'mustafagirgin12342123@gmail.com', 'Girgin', '5370540004' , 'mustafa22');
+VALUES (4, 'Mustafa', 'mustafagirgin12342123@gmail.com', 'Girgin', '5370540004', 'mustafa22');
 
 
 INSERT INTO public.CATEGORY(ID, NAME, DEPTH, ID_TOP_CATEGORY)

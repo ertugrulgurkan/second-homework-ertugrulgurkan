@@ -5,7 +5,6 @@ import com.ertugrul.springboot.dto.UserDto;
 import com.ertugrul.springboot.entity.User;
 import com.ertugrul.springboot.exception.UserNotFoundException;
 import com.ertugrul.springboot.service.UserService;
-import com.ertugrul.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,9 +19,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ProductService productService;
 
 
     @GetMapping(value = {"", "/"})
@@ -48,7 +43,7 @@ public class UserController {
         return user;
     }
 
-    @PostMapping("")
+    @PostMapping(value = {"", "/"})
     public ResponseEntity<Object> save(@RequestBody UserDto userDto) {
 
         User user = UserConverter.INSTANCE.convertUserDtoToUser(userDto);
@@ -88,12 +83,12 @@ public class UserController {
 
     /*Example Req: GET http://localhost:8080/api/users?username=ertugrulg */
     @GetMapping(
-            value = "",
+            value = {"", "/"},
             params = "username"
     )
-    public User findByUserName(@RequestParam(value = "username") String userName) {
+    public User findByUsername(@RequestParam(value = "username") String username) {
 
-        User user = userService.findByUserName(userName);
+        User user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UserNotFoundException("User not found.");
@@ -104,7 +99,7 @@ public class UserController {
 
     /*Example Req: GET http://localhost:8080/api/users?phone=5370540004 */
     @GetMapping(
-            value = "",
+            value = {"", "/"},
             params = "phone"
     )
     public User findByPhone(@RequestParam(value = "phone") String phone) {
@@ -121,7 +116,7 @@ public class UserController {
 
     /*Example Req:  DELETE http://localhost:8080/api/users?username=mehmet12431&phone=5370001003*/
     @DeleteMapping(
-            value = "",
+            value = {"", "/"},
             params = {"phone", "username"}
     )
     public void deleteByPhoneAndUserName(@RequestParam(value = "phone") String phone,

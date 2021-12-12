@@ -1,10 +1,14 @@
 package com.ertugrul.springboot.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "PRODUCT_COMMENT")
+@EntityListeners(AuditingEntityListener.class)
 public class ProductComment {
 
     @SequenceGenerator(name = "generator", sequenceName = "PRODUCT_COMMENT_ID_SEQ")
@@ -17,6 +21,7 @@ public class ProductComment {
     private String comment;
 
     @Column(name = "COMMENT_DATE")
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date commentDate;
 

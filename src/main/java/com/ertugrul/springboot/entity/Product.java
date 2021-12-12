@@ -2,6 +2,8 @@ package com.ertugrul.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +13,7 @@ import java.util.Date;
 @Table(name = "PRODUCT")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "category"})
 @JsonFilter("ProductFilter")
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
 
     @SequenceGenerator(name = "generator", sequenceName = "PRODUCT_ID_SEQ")
@@ -26,6 +29,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(name = "RECORD_DATE")
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date recordDate;
 

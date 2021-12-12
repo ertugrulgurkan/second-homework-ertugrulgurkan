@@ -29,14 +29,12 @@ public class UserService {
         return user;
     }
 
-    public User findByUserName(String userName) {
-        Optional<User> optionalUser = userDao.findByUserName(userName);
-
+    public User findByUsername(String username) {
+        Optional<User> optionalUser = userDao.findByUsername(username);
         User user = null;
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
         }
-
         return user;
     }
 
@@ -51,8 +49,8 @@ public class UserService {
         return user;
     }
 
-    public User findByPhoneAndUserName(String phone,String userName) {
-        Optional<User> optionalUser = userDao.findByPhoneAndUserName(phone,userName);
+    public User findByPhoneAndUserName(String phone, String username) {
+        Optional<User> optionalUser = userDao.findByPhoneAndUsername(phone, username);
 
         User user = null;
         if (optionalUser.isPresent()) {
