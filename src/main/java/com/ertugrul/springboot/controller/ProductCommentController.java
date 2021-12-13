@@ -11,7 +11,6 @@ import com.ertugrul.springboot.exception.UserNotFoundException;
 import com.ertugrul.springboot.service.ProductCommentService;
 import com.ertugrul.springboot.service.ProductService;
 import com.ertugrul.springboot.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,22 +22,14 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class ProductCommentController {
 
-    @Autowired
-    private ProductCommentService productCommentService;
+    private final ProductCommentService productCommentService;
+    private final ProductService productService;
+    private final UserService userService;
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private UserService userService;
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        ProductComment productCommentById = productCommentService.findById(id);
-        if (productCommentById == null)
-            throw new CommentNotFoundException("Comment not found. id: " + id);
-        else
-            productCommentService.deleteById(id);
+    public ProductCommentController(ProductCommentService productCommentService, ProductService productService, UserService userService) {
+        this.productCommentService = productCommentService;
+        this.productService = productService;
+        this.userService = userService;
     }
 
     // GET http://localhost:8080/api/comments
@@ -50,6 +41,28 @@ public class ProductCommentController {
         List<ProductCommentDto> productCommentDtoList = ProductCommentConverter.INSTANCE.convertAllProductCommentListToProductCommentDtoList(productCommentList);
 
         return productCommentDtoList;
+    }
+
+    @GetMapping("/{id}")
+    public ProductCommentDto findById(@PathVariable Long id) {
+
+        ProductComment productComment = productCommentService.findById(id);
+
+        if (productComment == null) {
+            throw new CommentNotFoundException("Comment not found. id: " + id);
+        }
+        ProductCommentDto productCommentDto = ProductCommentConverter.INSTANCE.convertProductCommentToProductCommentDto(productComment);
+
+        return productCommentDto;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        ProductComment productCommentById = productCommentService.findById(id);
+        if (productCommentById == null)
+            throw new CommentNotFoundException("Comment not found. id: " + id);
+        else
+            productCommentService.deleteById(id);
     }
 
     /*

@@ -9,7 +9,6 @@ import com.ertugrul.springboot.entity.Product;
 import com.ertugrul.springboot.exception.CategoryNotFoundException;
 import com.ertugrul.springboot.service.CategoryService;
 import com.ertugrul.springboot.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,11 +20,13 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+    private final ProductService productService;
 
-    @Autowired
-    private ProductService productService;
+    public CategoryController(CategoryService categoryService, ProductService productService) {
+        this.categoryService = categoryService;
+        this.productService = productService;
+    }
 
 
     @GetMapping(value = {"", "/"})
@@ -91,8 +92,8 @@ public class CategoryController {
     public List<ProductDetailDto> findAllProductByCategoryId(@PathVariable Long id) {
         List<Product> productList = productService.findAllByCategoryOrderByIdDesc(id);
 
-        List<ProductDetailDto> productDetayDtoList = ProductConverter.INSTANCE.convertAllProductListToProductDetailDtoList(productList);
+        List<ProductDetailDto> productDetailDtoList = ProductConverter.INSTANCE.convertAllProductListToProductDetailDtoList(productList);
 
-        return productDetayDtoList;
+        return productDetailDtoList;
     }
 }

@@ -3,7 +3,6 @@ package com.ertugrul.springboot.service;
 
 import com.ertugrul.springboot.dao.ProductDao;
 import com.ertugrul.springboot.entity.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    @Autowired
-    private ProductDao productDao;
+
+    private final ProductDao productDao;
+
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     public List<Product> findAll() {
         return (List<Product>) productDao.findAll();

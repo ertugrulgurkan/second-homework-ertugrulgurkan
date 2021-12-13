@@ -2,7 +2,6 @@ package com.ertugrul.springboot.service;
 
 import com.ertugrul.springboot.dao.CategoryDao;
 import com.ertugrul.springboot.entity.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryDao categoryDao;
+    private final CategoryDao categoryDao;
+
+    public CategoryService(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
 
 
     public List<Category> findAll() {

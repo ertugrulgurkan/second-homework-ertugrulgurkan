@@ -2,7 +2,6 @@ package com.ertugrul.springboot.service;
 
 import com.ertugrul.springboot.dao.ProductCommentDao;
 import com.ertugrul.springboot.entity.ProductComment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,12 @@ import java.util.Optional;
 
 @Service
 public class ProductCommentService {
-    @Autowired
-    private ProductCommentDao productCommentDao;
+
+    private final ProductCommentDao productCommentDao;
+
+    public ProductCommentService(ProductCommentDao productCommentDao) {
+        this.productCommentDao = productCommentDao;
+    }
 
     public List<ProductComment> findAll() {
         return (List<ProductComment>) productCommentDao.findAll();

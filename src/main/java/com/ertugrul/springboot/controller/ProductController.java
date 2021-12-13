@@ -13,7 +13,6 @@ import com.ertugrul.springboot.service.ProductCommentService;
 import com.ertugrul.springboot.service.ProductService;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +27,14 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    @Autowired
-    private ProductCommentService productCommentService;
+    private final ProductCommentService productCommentService;
+
+    public ProductController(ProductService productService, ProductCommentService productCommentService) {
+        this.productService = productService;
+        this.productCommentService = productCommentService;
+    }
 
     @GetMapping(value = {"", "/"})
     public MappingJacksonValue findAllProductList() {

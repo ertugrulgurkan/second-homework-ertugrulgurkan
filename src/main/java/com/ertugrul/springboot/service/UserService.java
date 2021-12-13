@@ -2,7 +2,6 @@ package com.ertugrul.springboot.service;
 
 import com.ertugrul.springboot.dao.UserDao;
 import com.ertugrul.springboot.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserDao userDao;
+
+    private final UserDao userDao;
+
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public List<User> findAll() {
         return (List<User>) userDao.findAll();

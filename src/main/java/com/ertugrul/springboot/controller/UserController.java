@@ -5,7 +5,6 @@ import com.ertugrul.springboot.dto.UserDto;
 import com.ertugrul.springboot.entity.User;
 import com.ertugrul.springboot.exception.UserNotFoundException;
 import com.ertugrul.springboot.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,8 +16,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping(value = {"", "/"})
@@ -32,15 +34,16 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable Long id) {
+    public UserDto findById(@PathVariable Long id) {
 
         User user = userService.findById(id);
 
         if (user == null) {
             throw new UserNotFoundException("User not found. id: " + id);
         }
+        UserDto userDto = UserConverter.INSTANCE.convertUserToUserDto(user);
 
-        return user;
+        return userDto;
     }
 
     @PostMapping(value = {"", "/"})
@@ -86,15 +89,16 @@ public class UserController {
             value = {"", "/"},
             params = "username"
     )
-    public User findByUsername(@RequestParam(value = "username") String username) {
+    public UserDto findByUsername(@RequestParam(value = "username") String username) {
 
         User user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UserNotFoundException("User not found.");
         }
+        UserDto userDto = UserConverter.INSTANCE.convertUserToUserDto(user);
 
-        return user;
+        return userDto;
     }
 
     /*Example Req: GET http://localhost:8080/api/users?phone=5370540004 */
@@ -102,15 +106,16 @@ public class UserController {
             value = {"", "/"},
             params = "phone"
     )
-    public User findByPhone(@RequestParam(value = "phone") String phone) {
+    public UserDto findByPhone(@RequestParam(value = "phone") String phone) {
 
         User user = userService.findByPhone(phone);
 
         if (user == null) {
             throw new UserNotFoundException("User not found.");
         }
+        UserDto userDto = UserConverter.INSTANCE.convertUserToUserDto(user);
 
-        return user;
+        return userDto;
     }
 
 
