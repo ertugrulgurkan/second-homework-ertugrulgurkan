@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//Kategoriler ile ilgili data ile ilgili işlemleri gerçekleştiren ve contollera aktaran servis.
 @Service
 public class CategoryService {
 

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+//Api üzerinden yorumlara erişmek için yazılmış controller sınıfı
 @RestController
 @RequestMapping("/api/comments")
 public class ProductCommentController {
@@ -56,16 +57,31 @@ public class ProductCommentController {
         return productCommentDto;
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        ProductComment productCommentById = productCommentService.findById(id);
-        if (productCommentById == null)
-            throw new CommentNotFoundException("Comment not found. id: " + id);
-        else
-            productCommentService.deleteById(id);
+
+    // 3.1. Bir kullanıcının yaptığı yorumlari getiren servis
+    // Example Req:  http://localhost:8080/api/comments?username=ertugrulg
+    @GetMapping(
+            value = {"", "/"},
+            params = "username"
+    )
+    public List<ProductCommentDto> findCommentByUsername(@RequestParam(value = "username") String username) {
+
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException("User not found.");
+        }
+        List<ProductComment> productCommentList = productCommentService.findCommentByUsername(username);
+
+        if (productCommentList == null || productCommentList.size() == 0) {
+            throw new CommentNotFoundException("The user has not written any comments yet.");
+        }
+        List<ProductCommentDto> productCommentDtoList = ProductCommentConverter.INSTANCE.convertAllProductCommentListToProductCommentDtoList(productCommentList);
+        return productCommentDtoList;
     }
 
+
     /*
+    3.3. Yeni bir yorum yazılabilecek servis
     POST http://localhost:8080/api/comments
       {
         "productId": 2,
@@ -93,24 +109,15 @@ public class ProductCommentController {
     }
 
 
-    // Example Req:  http://localhost:8080/api/comments?username=ertugrulg
-    @GetMapping(
-            value = {"", "/"},
-            params = "username"
-    )
-    public List<ProductCommentDto> findCommentByUsername(@RequestParam(value = "username") String username) {
-
-        User user = userService.findByUsername(username);
-        if (user == null) {
-            throw new UserNotFoundException("User not found.");
-        }
-        List<ProductComment> productCommentList = productCommentService.findCommentByUsername(username);
-
-        if (productCommentList == null || productCommentList.size() == 0) {
-            throw new CommentNotFoundException("The user has not written any comments yet.");
-        }
-        List<ProductCommentDto> productCommentDtoList = ProductCommentConverter.INSTANCE.convertAllProductCommentListToProductCommentDtoList(productCommentList);
-        return productCommentDtoList;
+    // 3.4 Yorum silebilecek bir servis
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        ProductComment productCommentById = productCommentService.findById(id);
+        if (productCommentById == null)
+            throw new CommentNotFoundException("Comment not found. id: " + id);
+        else
+            productCommentService.deleteById(id);
     }
+
 
 }

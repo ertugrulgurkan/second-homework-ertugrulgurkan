@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+//Api üzerinden ürünlere erişmek için yazılmış controller sınıfı
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -128,6 +129,17 @@ public class ProductController {
         return productDetailDtoList;
     }
 
+    private SimpleFilterProvider getProductFilterProvider(String filterName) {
+        SimpleBeanPropertyFilter filter = getProductFilter();
+
+        return new SimpleFilterProvider().addFilter(filterName, filter);
+    }
+
+    private SimpleBeanPropertyFilter getProductFilter() {
+        return SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "price", "recordDate");
+    }
+
+    // 3.2. Bir ürüne yapılan tüm yorumları getiren bir servis
     // Example Req:  http://localhost:8080/api/products/3/comments
     @GetMapping(value = {"/{id}/comments/", "/{id}/comments"})
     public List<ProductCommentDto> findProductCommentByUserId(@PathVariable Long id) {
@@ -144,13 +156,4 @@ public class ProductController {
         return productCommentDtoList;
     }
 
-    private SimpleFilterProvider getProductFilterProvider(String filterName) {
-        SimpleBeanPropertyFilter filter = getProductFilter();
-
-        return new SimpleFilterProvider().addFilter(filterName, filter);
-    }
-
-    private SimpleBeanPropertyFilter getProductFilter() {
-        return SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "price", "recordDate");
-    }
 }

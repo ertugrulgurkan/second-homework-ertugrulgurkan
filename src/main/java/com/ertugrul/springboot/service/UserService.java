@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//Kullanıcılar ile ilgili dataya controllerdan erişebilmek için yazılmış Servis.
 @Service
 public class UserService {
-
 
     private final UserDao userDao;
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//Ürünlere ait yapılmış olan yorumları getiren servis
 @Service
 public class ProductCommentService {
 

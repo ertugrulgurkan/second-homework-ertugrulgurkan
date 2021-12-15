@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//Ürünler ile ilgili dataya controllerdan erişebilmek için yazılmış Servis.
 @Service
 public class ProductService {
 

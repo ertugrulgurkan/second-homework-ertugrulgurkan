@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+//Api üzerinden kategorilere erişmek için yazılmış controller sınıfı
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
