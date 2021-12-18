@@ -18,11 +18,7 @@ public interface CategoryConverter {
     @Mapping(target = "topCategoryId", source = "topCategory.id")
     List<CategoryDto> convertAllCategoryListToCategoryDtoList(List<Category> categoryList);
 
-//    @Mapping(target = "ustCategory.id", source = "ustCategoryId", expression = "java(null))
-//    @Mapping(target = "ustCategory.id", source = "ustCategoryId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-
-    //    @Mapping(target = "ustCategory.id", expression = "java(categoryDto.getUstCategoryId() == null ? null : " +
-//            "categoryDto.getUstCategoryId())")
+    @Mapping(source = "topCategoryId", target = "topCategory.id")
     Category convertCategoryDtoToCategory(CategoryDto categoryDto);
 
     @AfterMapping
